@@ -3,9 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --bg: #0A0A0A;
-  --fg: #FAFAFA;
-  --accent: #7C3AED;
+  --bg: #F5F3EE;
+  --bg-elevated: #FFFFFF;
+  --fg: #0A0A0A;
+  --fg-muted: #5E5D5A;
+  --border: #E7E3D8;
+  --accent: #0A0A0A;
 }
 
 * {
@@ -26,109 +29,49 @@ body {
   font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
   min-height: 100vh;
   position: relative;
-  overflow-x: hidden;
 }
 
-/* Subtle noise texture overlay */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
-/* Animated background gradient orbs */
-.bg-orbs {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.bg-orbs::before,
-.bg-orbs::after {
-  content: "";
-  position: absolute;
-  width: 600px;
-  height: 600px;
-  border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.25;
-  animation: float 14s ease-in-out infinite;
-}
-
-.bg-orbs::before {
-  background: radial-gradient(circle, #7C3AED 0%, transparent 70%);
-  top: -200px;
-  left: -100px;
-}
-
-.bg-orbs::after {
-  background: radial-gradient(circle, #4F46E5 0%, transparent 70%);
-  bottom: -200px;
-  right: -100px;
-  animation-delay: -7s;
-}
-
-@keyframes float {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(40px, -40px) scale(1.1); }
-}
-
-/* Glassmorphism card */
-.glass-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.glass-card:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(124, 58, 237, 0.4);
-}
-
-/* Pill button base */
+/* Pill button — dark on cream */
 .btn-primary {
-  background: #7C3AED;
-  color: #fff;
+  background: #0A0A0A;
+  color: #F5F3EE;
   border-radius: 9999px;
-  padding: 1rem 2rem;
-  font-weight: 600;
-  transition: all 0.25s ease;
+  padding: 0.95rem 1.75rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
+  border: 1px solid #0A0A0A;
 }
 
 .btn-primary:hover {
-  background: #8B5CF6;
-  transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 20px 40px -10px rgba(124, 58, 237, 0.5);
+  background: #1F1F1F;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px -10px rgba(10, 10, 10, 0.35);
 }
 
 .btn-secondary {
   background: transparent;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #0A0A0A;
   border-radius: 9999px;
-  padding: 1rem 2rem;
-  font-weight: 600;
-  transition: all 0.25s ease;
+  padding: 0.95rem 1.75rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border: 1px solid #D9D4C4;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-secondary:hover {
-  border-color: rgba(124, 58, 237, 0.8);
-  background: rgba(124, 58, 237, 0.08);
+  background: #FFFFFF;
+  border-color: #0A0A0A;
 }
 
 /* Focus states */
 *:focus-visible {
-  outline: 2px solid #7C3AED;
+  outline: 2px solid #0A0A0A;
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -150,12 +93,17 @@ body::before {
   height: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #0A0A0A;
+  background: #F5F3EE;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(124, 58, 237, 0.3);
+  background: #D9D4C4;
   border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(124, 58, 237, 0.5);
+  background: #C4BFAE;
+}
+
+::selection {
+  background: #0A0A0A;
+  color: #F5F3EE;
 }

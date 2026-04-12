@@ -8,51 +8,45 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#0A0A0A",
-        foreground: "#FAFAFA",
-        accent: {
-          DEFAULT: "#7C3AED",
-          hover: "#8B5CF6",
-          glow: "#A78BFA",
+        cream: {
+          DEFAULT: "#F5F3EE",
+          light: "#FBFAF5",
+          dark: "#EEEBE0",
         },
-        muted: "rgba(255,255,255,0.6)",
-        card: "rgba(255,255,255,0.04)",
-        border: "rgba(255,255,255,0.1)",
+        ink: {
+          DEFAULT: "#0A0A0A",
+          soft: "#1F1F1F",
+          muted: "#5E5D5A",
+          faint: "#8A8880",
+        },
+        line: "#E7E3D8",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        display: ["var(--font-space-grotesk)", "system-ui", "sans-serif"],
+        display: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
       fontSize: {
-        "display-xl": ["clamp(3.5rem, 8vw, 5rem)", { lineHeight: "1", letterSpacing: "-0.02em" }],
-        "display-lg": ["clamp(2.5rem, 6vw, 3.5rem)", { lineHeight: "1.05", letterSpacing: "-0.02em" }],
-        "display-md": ["clamp(1.75rem, 4vw, 2.5rem)", { lineHeight: "1.1", letterSpacing: "-0.01em" }],
+        "display-xl": [
+          "clamp(2.75rem, 6.5vw, 5.25rem)",
+          { lineHeight: "1.05", letterSpacing: "-0.035em" },
+        ],
+        "display-lg": [
+          "clamp(2.25rem, 5vw, 3.75rem)",
+          { lineHeight: "1.08", letterSpacing: "-0.03em" },
+        ],
+        "display-md": [
+          "clamp(1.75rem, 3.5vw, 2.5rem)",
+          { lineHeight: "1.15", letterSpacing: "-0.02em" },
+        ],
       },
       borderRadius: {
         "2xl": "1rem",
         "3xl": "1.5rem",
+        "4xl": "2rem",
       },
-      backdropBlur: {
-        xs: "2px",
-      },
-      animation: {
-        "gradient-shift": "gradient-shift 12s ease infinite",
-        "fade-in": "fade-in 0.6s ease-out forwards",
-        "float": "float 8s ease-in-out infinite",
-      },
-      keyframes: {
-        "gradient-shift": {
-          "0%, 100%": { backgroundPosition: "0% 50%" },
-          "50%": { backgroundPosition: "100% 50%" },
-        },
-        "fade-in": {
-          "0%": { opacity: "0", transform: "translateY(10px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        "float": {
-          "0%, 100%": { transform: "translate(0, 0)" },
-          "50%": { transform: "translate(20px, -20px)" },
-        },
+      boxShadow: {
+        soft: "0 1px 2px rgba(10,10,10,0.04), 0 8px 24px -12px rgba(10,10,10,0.08)",
+        lift: "0 2px 4px rgba(10,10,10,0.05), 0 20px 40px -16px rgba(10,10,10,0.12)",
       },
     },
   },
