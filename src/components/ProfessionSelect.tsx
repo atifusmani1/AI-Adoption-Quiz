@@ -15,10 +15,10 @@ export default function ProfessionSelect({
   return (
     <div className="w-full">
       <div className="text-center">
-        <h2 className="text-display-md font-semibold text-ink">
+        <h2 className="text-display-md">
           First, tell us about your field
         </h2>
-        <p className="mt-3 text-ink-muted">
+        <p className="mt-3 text-fg-muted">
           This is how we compare your AI usage against industry benchmarks.
         </p>
       </div>
@@ -30,6 +30,7 @@ export default function ProfessionSelect({
             <motion.button
               key={p.label}
               type="button"
+              aria-pressed={isSelected}
               onClick={() => onSelect(p.label)}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -39,23 +40,23 @@ export default function ProfessionSelect({
                 ease: [0.16, 1, 0.3, 1],
               }}
               whileTap={{ scale: 0.98 }}
-              className={`group flex items-center gap-3 rounded-2xl border bg-white px-4 py-4 text-left transition-all duration-200 ${
+              className={`group flex items-center gap-3 rounded-2xl border px-4 py-4 text-left transition-all duration-200 ${
                 isSelected
-                  ? "border-ink shadow-lift"
-                  : "border-line hover:border-ink/60 hover:shadow-soft"
+                  ? "border-accent bg-accent-light shadow-glow"
+                  : "border-line bg-bg-card shadow-soft hover:shadow-card hover:border-gray-300"
               }`}
             >
               <span
-                className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-sm transition-colors ${
+                className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm transition-colors ${
                   isSelected
-                    ? "border-ink bg-ink text-cream"
-                    : "border-line bg-cream text-ink group-hover:border-ink/60"
+                    ? "bg-accent text-white"
+                    : "bg-bg-elevated text-fg-muted group-hover:text-fg"
                 }`}
                 aria-hidden="true"
               >
                 {p.icon}
               </span>
-              <span className="text-sm font-medium text-ink md:text-[15px]">
+              <span className="text-sm font-medium md:text-[15px]">
                 {p.label}
               </span>
             </motion.button>

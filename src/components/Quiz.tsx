@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { QUESTIONS } from "@/lib/questions";
 import { QUIZ_STEPS } from "@/types/quiz";
@@ -119,23 +120,27 @@ export default function Quiz() {
     currentStep > 0 && currentStep <= QUIZ_STEPS.EMAIL;
 
   return (
-    <main className="relative min-h-screen bg-cream text-ink">
+    <main className="relative min-h-screen bg-bg text-fg">
       <div className="mx-auto flex min-h-screen w-full max-w-[1200px] flex-col px-6 md:px-10">
         {/* Header row */}
-        <header className="flex items-center justify-between py-8">
+        <header className="flex items-center justify-between py-6">
           <Link
             href="/"
-            className="text-lg font-semibold tracking-tight text-ink transition-opacity hover:opacity-70"
+            className="flex items-center gap-2 transition-opacity hover:opacity-70"
           >
-            adapt<span className="text-ink-muted">.ai</span>
+            <Image src="/logos/adapt-ai-logo.svg" alt="AdaptAI" width={28} height={28} className="object-contain" />
+            <span className="text-sm font-semibold uppercase tracking-[0.15em] text-fg">
+              AdaptAI
+            </span>
           </Link>
           {canShowBack && (
             <button
               type="button"
               onClick={goBack}
-              className="text-xs uppercase tracking-[0.18em] text-ink-muted transition-colors hover:text-ink"
+              className="flex items-center gap-1 text-sm font-medium text-fg-faint transition-colors hover:text-fg"
             >
-              ← Back
+              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              Back
             </button>
           )}
         </header>

@@ -35,11 +35,11 @@ export default function EmailCapture({
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         className="text-center"
       >
-        <h2 className="text-display-md font-semibold text-ink">
+        <h2 className="text-display-md">
           Almost there.
         </h2>
-        <p className="mt-3 text-ink-muted">
-          Enter your email to see your AI Edge report and personalized tool
+        <p className="mt-3 text-fg-muted">
+          Enter your email to see your AdaptAI report and personalized tool
           recommendations.
         </p>
       </motion.div>
@@ -47,11 +47,7 @@ export default function EmailCapture({
       <motion.form
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 0.55,
-          delay: 0.1,
-          ease: [0.16, 1, 0.3, 1],
-        }}
+        transition={{ duration: 0.55, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
         onSubmit={handleSubmit}
         className="mx-auto mt-10 flex w-full max-w-md flex-col gap-4"
       >
@@ -68,10 +64,10 @@ export default function EmailCapture({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             onBlur={() => setTouched(true)}
-            className={`w-full rounded-2xl border bg-white px-5 py-4 text-base text-ink placeholder:text-ink-faint transition-colors focus:outline-none ${
+            className={`w-full rounded-2xl border bg-white px-5 py-4 text-base text-fg placeholder:text-fg-faint shadow-soft transition-colors focus:outline-none focus:ring-2 focus:ring-accent/30 ${
               showError
-                ? "border-red-400 focus:border-red-500"
-                : "border-line focus:border-ink"
+                ? "border-red-400 focus:border-red-400"
+                : "border-line focus:border-accent"
             }`}
           />
           {showError && (
@@ -84,15 +80,15 @@ export default function EmailCapture({
         <button
           type="submit"
           disabled={!isValid}
-          className={`btn-primary w-full justify-center ${
-            !isValid ? "cursor-not-allowed opacity-40 hover:translate-y-0 hover:shadow-none" : ""
+          className={`btn-primary w-full ${
+            !isValid ? "cursor-not-allowed opacity-30 hover:translate-y-0 hover:shadow-none" : ""
           }`}
         >
           See My Results
-          <span aria-hidden="true">→</span>
+          <span aria-hidden="true">&rarr;</span>
         </button>
 
-        <p className="text-center text-xs text-ink-faint">
+        <p className="text-center text-xs text-fg-faint">
           We&rsquo;ll never share your email. No spam.
         </p>
       </motion.form>

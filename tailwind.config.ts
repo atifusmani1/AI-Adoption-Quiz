@@ -8,45 +8,53 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        cream: {
-          DEFAULT: "#F5F3EE",
-          light: "#FBFAF5",
-          dark: "#EEEBE0",
+        bg: {
+          DEFAULT: "#FFFFFF",
+          card: "#FFFFFF",
+          elevated: "#F7F8FA",
+          hover: "#F0F2F5",
+          muted: "#F9FAFB",
         },
-        ink: {
-          DEFAULT: "#0A0A0A",
-          soft: "#1F1F1F",
-          muted: "#5E5D5A",
-          faint: "#8A8880",
+        fg: {
+          DEFAULT: "#111111",
+          muted: "#6B7280",
+          faint: "#9CA3AF",
         },
-        line: "#E7E3D8",
+        accent: {
+          DEFAULT: "#22C55E",
+          hover: "#16A34A",
+          light: "#DCFCE7",
+          dim: "rgba(34,197,94,0.08)",
+        },
+        line: "#E5E7EB",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        display: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
       fontSize: {
         "display-xl": [
-          "clamp(2.75rem, 6.5vw, 5.25rem)",
-          { lineHeight: "1.05", letterSpacing: "-0.035em" },
+          "clamp(2.75rem, 6.5vw, 4.5rem)",
+          { lineHeight: "1.08", letterSpacing: "-0.035em", fontWeight: "700" },
         ],
         "display-lg": [
-          "clamp(2.25rem, 5vw, 3.75rem)",
-          { lineHeight: "1.08", letterSpacing: "-0.03em" },
+          "clamp(2rem, 4.5vw, 3rem)",
+          { lineHeight: "1.12", letterSpacing: "-0.03em", fontWeight: "700" },
         ],
         "display-md": [
-          "clamp(1.75rem, 3.5vw, 2.5rem)",
-          { lineHeight: "1.15", letterSpacing: "-0.02em" },
+          "clamp(1.5rem, 3.5vw, 2rem)",
+          { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" },
         ],
       },
       borderRadius: {
         "2xl": "1rem",
-        "3xl": "1.5rem",
-        "4xl": "2rem",
+        "3xl": "1.25rem",
       },
       boxShadow: {
-        soft: "0 1px 2px rgba(10,10,10,0.04), 0 8px 24px -12px rgba(10,10,10,0.08)",
-        lift: "0 2px 4px rgba(10,10,10,0.05), 0 20px 40px -16px rgba(10,10,10,0.12)",
+        soft: "0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)",
+        card: "0 4px 24px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)",
+        "card-hover": "0 8px 40px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.04)",
+        elevated: "0 12px 48px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04)",
+        glow: "0 0 40px rgba(34,197,94,0.12)",
       },
     },
   },

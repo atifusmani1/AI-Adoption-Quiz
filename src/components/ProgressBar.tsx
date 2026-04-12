@@ -4,13 +4,10 @@ import { motion } from "framer-motion";
 import { TOTAL_QUESTIONS } from "@/types/quiz";
 
 interface ProgressBarProps {
-  /** Current quiz step (0 = profession, 1–10 = questions, 11 = email). */
   step: number;
 }
 
 export default function ProgressBar({ step }: ProgressBarProps) {
-  // Map step → progress fraction. Profession select counts as step 0 / 11.
-  // 11 buckets: profession + 10 questions. Email = 100%.
   const totalBuckets = TOTAL_QUESTIONS + 1;
   const clamped = Math.max(0, Math.min(step, totalBuckets));
   const pct = (clamped / totalBuckets) * 100;
@@ -24,15 +21,22 @@ export default function ProgressBar({ step }: ProgressBarProps) {
 
   return (
     <div className="w-full">
-      <div className="relative h-[3px] w-full overflow-hidden rounded-full bg-line">
+      <div
+        role="progressbar"
+        aria-valuenow={clamped}
+        aria-valuemin={0}
+        aria-valuemax={totalBuckets}
+        aria-label={label}
+        className="relative h-1.5 w-full overflow-hidden rounded-full bg-bg-elevated"
+      >
         <motion.div
-          className="absolute inset-y-0 left-0 rounded-full bg-ink"
+          className="absolute inset-y-0 left-0 rounded-full bg-accent"
           initial={false}
           animate={{ width: `${pct}%` }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         />
       </div>
-      <div className="mt-3 text-xs uppercase tracking-[0.18em] text-ink-muted">
+      <div className="mt-3 text-xs font-medium text-fg-faint">
         {label}
       </div>
     </div>

@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { UserState, QuizResult } from "@/types/quiz";
+import type { UserState } from "@/types/quiz";
 import { getRecommendations } from "@/lib/recommendations";
+import { clearQuizSession } from "@/lib/quizState";
 
 interface PaywallProps {
   userState: UserState;
@@ -45,20 +46,6 @@ function buildPayload(userState: UserState) {
   };
 }
 
-const CHECK = (
-  <svg
-    className="h-4 w-4 shrink-0 text-ink"
-    viewBox="0 0 16 16"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M3.5 8.5L6.5 11.5L12.5 4.5" />
-  </svg>
-);
-
 const perks = [
   "Detailed analysis across all 5 dimensions",
   "Personalized learning path for your field",
@@ -75,11 +62,9 @@ export default function Paywall({ userState }: PaywallProps) {
   const [toast, setToast] = useState<string | null>(null);
   const payloadRef = useRef<ReturnType<typeof buildPayload> | null>(null);
 
-  // Fire POST exactly once on mount
   useEffect(() => {
     if (hasFired.current || !userState.result) return;
     hasFired.current = true;
-
     const payload = buildPayload(userState);
     payloadRef.current = payload;
     setPostStatus("sending");
@@ -92,6 +77,7 @@ export default function Paywall({ userState }: PaywallProps) {
       .then((res) => {
         if (res.ok) {
           setPostStatus("sent");
+          clearQuizSession();
           console.log("[AdaptAI] Submission POST succeeded");
         } else {
           setPostStatus("error");
@@ -137,12 +123,13 @@ export default function Paywall({ userState }: PaywallProps) {
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="text-center"
       >
-        <span className="text-xs uppercase tracking-[0.2em] text-ink-muted">
-          Full Report
-        </span>
-        <h2 className="mt-3 text-display-md font-semibold text-ink">
-          Unlock Your Full AI Edge Report
+        <span className="badge-pill">Full Report</span>
+        <h2 className="mt-5 text-display-md">
+          Unlock Your Full AdaptAI Report
         </h2>
+        <p className="mx-auto mt-3 max-w-md text-fg-muted">
+          Go deeper with personalized analysis and a clear path to leveling up.
+        </p>
       </motion.div>
 
       {/* Perks */}
@@ -153,9 +140,9 @@ export default function Paywall({ userState }: PaywallProps) {
         className="mx-auto mt-10 max-w-sm space-y-3"
       >
         {perks.map((perk) => (
-          <li key={perk} className="flex items-start gap-3 text-[15px] text-ink">
-            {CHECK}
-            <span>{perk}</span>
+          <li key={perk} className="flex items-start gap-2.5 text-[15px]">
+            <svg className="mt-0.5 h-4 w-4 shrink-0 text-accent" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3.5 8.5L6.5 11.5L12.5 4.5"/></svg>
+            <span className="text-fg-muted">{perk}</span>
           </li>
         ))}
       </motion.ul>
@@ -165,62 +152,56 @@ export default function Paywall({ userState }: PaywallProps) {
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        className="mt-12 grid gap-4 md:grid-cols-2"
+        className="mt-12 grid gap-5 md:grid-cols-2"
       >
         {/* Basic */}
-        <div className="rounded-3xl border border-line bg-white px-6 py-8 shadow-soft">
-          <h3 className="text-lg font-semibold text-ink">Basic Report</h3>
-          <div className="mt-3 flex items-baseline gap-1">
-            <span className="text-3xl font-semibold tabular-nums text-ink">
-              $9.99
-            </span>
-            <span className="text-sm text-ink-muted">one-time</span>
+        <div className="light-card p-6">
+          <h3 className="text-lg font-semibold">Basic Report</h3>
+          <div className="mt-4 flex items-baseline gap-1">
+            <span className="text-4xl font-bold tabular-nums">$9.99</span>
+            <span className="text-sm text-fg-muted">/one-time</span>
           </div>
+          <p className="mt-2 text-sm text-fg-muted">Full report with all 5 dimensions.</p>
           <button
             type="button"
             onClick={() => handlePurchase("Basic Report")}
-            className="btn-secondary mt-6 w-full justify-center text-center"
+            className="btn-secondary mt-6 w-full"
           >
-            Get Full Report
+            Get Started
           </button>
         </div>
 
         {/* Pro */}
-        <div className="relative rounded-3xl border border-ink bg-white px-6 py-8 shadow-lift">
-          <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-ink px-4 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-cream">
+        <div className="relative rounded-3xl border-2 border-accent bg-white p-6 shadow-glow">
+          <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-accent px-4 py-1 text-xs font-semibold text-white">
             Most Popular
           </span>
-          <h3 className="text-lg font-semibold text-ink">Pro Bundle</h3>
-          <div className="mt-3 flex items-baseline gap-1">
-            <span className="text-3xl font-semibold tabular-nums text-ink">
-              $19.99
-            </span>
-            <span className="text-sm text-ink-muted">one-time</span>
+          <h3 className="text-lg font-semibold">Pro Bundle</h3>
+          <div className="mt-4 flex items-baseline gap-1">
+            <span className="text-4xl font-bold tabular-nums">$19.99</span>
+            <span className="text-sm text-fg-muted">/one-time</span>
           </div>
-          <p className="mt-2 text-sm text-ink-muted">
-            Full report + course access
-          </p>
+          <p className="mt-2 text-sm text-fg-muted">Full report + course access.</p>
           <button
             type="button"
             onClick={() => handlePurchase("Pro Bundle")}
-            className="btn-primary mt-6 w-full justify-center text-center"
+            className="btn-primary mt-6 w-full"
           >
-            Get Report + Course Access
+            Get Started
           </button>
         </div>
       </motion.div>
 
-      {/* Guarantee */}
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.4 }}
-        className="mt-6 text-center text-xs text-ink-faint"
+        className="mt-5 text-center text-xs text-fg-faint"
       >
         30-day money-back guarantee
       </motion.p>
 
-      {/* Footer row: POST status + download */}
+      {/* Footer: status + download */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -228,26 +209,15 @@ export default function Paywall({ userState }: PaywallProps) {
         className="mt-12 flex flex-col items-center gap-3"
       >
         {postStatus === "sent" && (
-          <span className="inline-flex items-center gap-1.5 text-xs text-ink-faint">
-            <svg
-              className="h-3.5 w-3.5"
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M3.5 8.5L6.5 11.5L12.5 4.5" />
-            </svg>
+          <span className="inline-flex items-center gap-1.5 text-xs text-accent">
+            <svg className="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3.5 8.5L6.5 11.5L12.5 4.5"/></svg>
             Submission recorded
           </span>
         )}
-
         <button
           type="button"
           onClick={handleDownloadJSON}
-          className="text-xs text-ink-faint underline underline-offset-2 transition-colors hover:text-ink-muted"
+          className="text-xs text-fg-faint underline underline-offset-2 transition-colors hover:text-fg-muted"
         >
           Download submission.json
         </button>
@@ -261,7 +231,7 @@ export default function Paywall({ userState }: PaywallProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3 }}
-            className="fixed bottom-8 left-1/2 z-50 -translate-x-1/2 rounded-2xl border border-line bg-white px-6 py-4 text-sm text-ink shadow-lift"
+            className="fixed bottom-8 left-1/2 z-50 mx-4 max-w-[90vw] -translate-x-1/2 rounded-2xl border border-line bg-white px-6 py-4 text-center text-sm shadow-elevated"
           >
             {toast}
           </motion.div>
