@@ -4,13 +4,15 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { QUESTIONS } from "@/lib/questions";
-import { QUIZ_STEPS, TOTAL_QUESTIONS } from "@/types/quiz";
+import { QUIZ_STEPS } from "@/types/quiz";
 import { computeQuizResult } from "@/lib/scoring";
 import { useQuizState } from "@/lib/quizState";
 import ProgressBar from "@/components/ProgressBar";
 import ProfessionSelect from "@/components/ProfessionSelect";
 import QuizQuestion from "@/components/QuizQuestion";
 import EmailCapture from "@/components/EmailCapture";
+import Results from "@/components/Results";
+import Paywall from "@/components/Paywall";
 
 const AUTO_ADVANCE_DELAY_MS = 400;
 
@@ -146,7 +148,13 @@ export default function Quiz() {
         )}
 
         {/* Step content */}
-        <section className="flex flex-1 items-center justify-center py-12">
+        <section
+          className={`flex flex-1 py-12 ${
+            currentStep >= QUIZ_STEPS.RESULTS
+              ? "items-start"
+              : "items-center justify-center"
+          }`}
+        >
           <div className="relative mx-auto w-full max-w-[640px]">
             <AnimatePresence mode="wait" custom={direction} initial={false}>
               <motion.div
@@ -185,13 +193,16 @@ export default function Quiz() {
                   />
                 )}
 
-                {currentStep >= QUIZ_STEPS.RESULTS && (
-                  <ResultsPlaceholder
+                {currentStep === QUIZ_STEPS.RESULTS && state.result && (
+                  <Results
+                    result={state.result}
                     profession={state.profession}
-                    score={state.result?.totalScore ?? 0}
-                    percentile={state.result?.percentile ?? 0}
-                    persona={state.result?.persona ?? ""}
+                    onContinue={() => goForward(QUIZ_STEPS.PAYWALL)}
                   />
+                )}
+
+                {currentStep === QUIZ_STEPS.PAYWALL && (
+                  <Paywall userState={state} />
                 )}
               </motion.div>
             </AnimatePresence>
@@ -199,49 +210,5 @@ export default function Quiz() {
         </section>
       </div>
     </main>
-  );
-}
-
-/**
- * Temporary placeholder — replaced in Phase 5 with the full Results component.
- */
-function ResultsPlaceholder({
-  profession,
-  score,
-  percentile,
-  persona,
-}: {
-  profession: string;
-  score: number;
-  percentile: number;
-  persona: string;
-}) {
-  return (
-    <div className="text-center">
-      <span className="text-xs uppercase tracking-[0.2em] text-ink-muted">
-        Coming in Phase 5
-      </span>
-      <h2 className="mt-4 text-display-md font-semibold text-ink">
-        Your results are ready
-      </h2>
-      <div className="mt-8 space-y-2 text-ink-muted">
-        <p>
-          Profession: <span className="text-ink">{profession}</span>
-        </p>
-        <p>
-          Score: <span className="text-ink">{score} / 40</span>
-        </p>
-        <p>
-          Percentile in your field:{" "}
-          <span className="text-ink">{percentile}%</span>
-        </p>
-        <p>
-          Persona: <span className="text-ink">{persona}</span>
-        </p>
-      </div>
-      <p className="mt-8 text-sm text-ink-faint">
-        Full results page + tool recommendations land in Phase 5.
-      </p>
-    </div>
   );
 }
