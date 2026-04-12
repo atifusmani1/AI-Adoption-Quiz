@@ -4,6 +4,35 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
+const MARQUEE_LOGOS = [
+  { src: "/logos/claude.svg", alt: "Claude", bg: "bg-[#F5E6D8]" },
+  { src: "/logos/chatgpt.png", alt: "ChatGPT", bg: "bg-[#E8F5EF]" },
+  { src: "/logos/cursor.png", alt: "Cursor", bg: "bg-[#F5F5F5]" },
+  { src: "/logos/copilot.png", alt: "GitHub Copilot", bg: "bg-[#F5F5F5]" },
+  { src: "/logos/canva.jpeg", alt: "Canva", bg: "bg-white" },
+  { src: "/logos/Japser.png", alt: "Jasper", bg: "bg-white" },
+  { src: "/logos/langchain.png", alt: "LangChain", bg: "bg-[#E8F0E8]" },
+  { src: "/logos/vercel.png", alt: "Vercel", bg: "bg-[#F5F5F5]" },
+];
+
+function ToolMarquee() {
+  const doubled = [...MARQUEE_LOGOS, ...MARQUEE_LOGOS];
+  return (
+    <div className="overflow-hidden">
+      <div className="flex w-max animate-marquee gap-3">
+        {doubled.map(({ src, alt, bg }, i) => (
+          <div
+            key={`${alt}-${i}`}
+            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl overflow-hidden ${bg}`}
+          >
+            <Image src={src} alt={alt} width={24} height={24} className="object-contain" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function NormalCurve() {
   const points: string[] = [];
   for (let i = 0; i <= 40; i++) {
@@ -87,12 +116,12 @@ export default function LandingHero() {
             </span>
           </motion.div>
           <motion.div {...fadeUp(0.05)} className="flex items-center gap-4">
-            <Link
-              href="/quiz"
-              className="btn-primary px-5 py-2.5 text-sm"
+            <a
+              href="#process"
+              className="btn-secondary px-5 py-2.5 text-sm"
             >
-              Start Quiz
-            </Link>
+              Our process
+            </a>
           </motion.div>
         </header>
 
@@ -191,24 +220,7 @@ export default function LandingHero() {
               {
                 title: "Tool recommendations",
                 desc: "Get hand-picked AI tools tailored to your profession and current skill level, with direct links to start using them today.",
-                visual: (
-                  <div className="flex flex-wrap gap-2">
-                    {[
-                      { src: "/logos/claude.svg", alt: "Claude", bg: "bg-[#F5E6D8]" },
-                      { src: "/logos/chatgpt.png", alt: "ChatGPT", bg: "bg-[#E8F5EF]" },
-                      { src: "/logos/cursor.png", alt: "Cursor", bg: "bg-[#F5F5F5]" },
-                      { src: "/logos/copilot.png", alt: "GitHub Copilot", bg: "bg-[#F5F5F5]" },
-                      { src: "/logos/canva.jpeg", alt: "Canva", bg: "bg-white" },
-                      { src: "/logos/Japser.png", alt: "Jasper", bg: "bg-white" },
-                      { src: "/logos/langchain.png", alt: "LangChain", bg: "bg-[#E8F0E8]" },
-                      { src: "/logos/vercel.png", alt: "Vercel", bg: "bg-[#F5F5F5]" },
-                    ].map(({ src, alt, bg }) => (
-                      <div key={alt} className={`flex h-9 w-9 items-center justify-center rounded-xl overflow-hidden ${bg}`}>
-                        <Image src={src} alt={alt} width={22} height={22} className="object-contain" />
-                      </div>
-                    ))}
-                  </div>
-                ),
+                visual: <ToolMarquee />,
               },
             ].map((item, i) => (
               <motion.div
