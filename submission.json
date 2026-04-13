@@ -1,0 +1,44 @@
+{
+  "email": "demo@example.com",
+  "profession": "Software Engineering",
+  "topic": "AI Adoption & Usage Assessment",
+  "responses": [
+    { "questionId": 1, "answer": "Multiple times a day", "value": 4 },
+    { "questionId": 2, "answer": "4-6 tools", "value": 3 },
+    { "questionId": 3, "answer": "I customize prompts and chain tools together", "value": 3 },
+    { "questionId": 4, "answer": "$20-50/month", "value": 3 },
+    { "questionId": 5, "answer": "Frequently — it's part of my process", "value": 4 },
+    { "questionId": 6, "answer": "3-5 areas", "value": 3 },
+    { "questionId": 7, "answer": "Occasionally build or customize AI workflows", "value": 3 },
+    { "questionId": 8, "answer": "Often — I evaluate and adopt new tools regularly", "value": 3 },
+    { "questionId": 9, "answer": "Regularly and see measurable improvement", "value": 4 },
+    { "questionId": 10, "answer": "Very important — I actively invest in learning", "value": 4 }
+  ],
+  "result": {
+    "totalScore": 34,
+    "maxScore": 40,
+    "percentage": 85,
+    "percentile": 92,
+    "persona": "Vanguard",
+    "dimensionScores": {
+      "frequency": 100,
+      "breadth": 75,
+      "depth": 75,
+      "investment": 75,
+      "integration": 100
+    }
+  },
+  "recommendations": [
+    "Claude Code",
+    "Claude API",
+    "Vercel AI SDK",
+    "LangChain"
+  ],
+  "metadata": {
+    "startedAt": "2026-04-12T10:00:00.000Z",
+    "completedAt": "2026-04-12T10:05:32.000Z",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+    "quizVersion": "1.0"
+  },
+  "timestamp": "2026-04-12T10:05:32.000Z"
+}
