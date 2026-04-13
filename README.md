@@ -73,7 +73,3 @@ The `submission.json` in the project root contains an example of this payload.
 ## Deployment
 
 Deployed on **Vercel**. No environment variables or server-side configuration needed — the POST request runs client-side from the browser.
-
-## License
-
-This project was built as a technical assessment submission.
